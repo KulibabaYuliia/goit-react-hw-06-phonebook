@@ -2,6 +2,9 @@ import { FormWrap, StyledField } from './ContactForm.styled';
 import { Formik, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 
+import { useDispatch } from 'react-redux';
+import { addContacts } from 'redux/sliceContacts';
+
 const phoneRegExp = /[0-9]{3}-[0-9]{2}-[0-9]{2}/;
 const nameRegExp = /^[a-zA-Zа-яА-Я]+(([' ][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/;
 
@@ -16,9 +19,11 @@ let userSchema = yup.object().shape({
     .required(),
 });
 
-export const ContactForm = ({ handleAddContact }) => {
+export const ContactForm = () => {
+  const dispatch = useDispatch();
+
   const submitHandler = (values, action) => {
-    handleAddContact(values);
+    dispatch(addContacts(values));
     action.resetForm();
   };
 
